@@ -1,0 +1,40 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+
+env:
+  ENVIRONMENT: "dev"
+  PROJECT_DIR: "game-2048-example"
+  PROJECT_NAME: "game-2048"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build an image from Dockerfile
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ env.PROJECT_DIR }}
+          push: false
+          tags: "${{ secrets.DOCKER_REGISTRY }}/${{ secrets.PROJECT_NAME }}:${{ github.sha }}"
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: 'vmalhotra7/2048:${{ github.sha }}'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
