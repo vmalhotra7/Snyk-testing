@@ -30,7 +30,7 @@ jobs:
         with:
           context: ${{ env.PROJECT_DIR }}
           push: true
-          tags: "${{ secrets.DOCKER_REGISTRY }}/${{ secrets.PROJECT_NAME }}:latest
+          tags: "${{ secrets.DOCKER_REGISTRY }}/${{ secrets.PROJECT_NAME }}:latest"
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.20.0
