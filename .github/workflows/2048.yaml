@@ -23,7 +23,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ${{ env.PROJECT_DIR }}
-          push: false
+          push: true
           tags: "${{ secrets.DOCKER_REGISTRY }}/${{ secrets.PROJECT_NAME }}:${{ github.sha }}"
 
       - name: Run Trivy vulnerability scanner
