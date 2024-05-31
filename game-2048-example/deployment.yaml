@@ -1,38 +1,21 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: game-2048
+  name: "2048-deployment"
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: game-2048
-  strategy:
-    type: RollingUpdate
+      app: "2048"
+  replicas: 5
   template:
     metadata:
       labels:
-        app: game-2048
+        app: "2048"
     spec:
       containers:
-        - name: backend
-          # Replace the `<>` placeholders with your docker registry info
-          image: 
+        - image: vmalhotra7/2048:latest
+          imagePullPolicy: Always
+          name: "2048"
           ports:
-            - name: http
-              containerPort: 8081
-          resources:
-            requests:
-              cpu: 200m
-              memory: 100Mi
-            limits:
-              cpu: 300m
-              memory: 200Mi
-          # securityContext:
-          #   readOnlyRootFilesystem: true
-          #   runAsNonRoot: true
-          #   allowPrivilegeEscalation: false
-          #   capabilities:
-          #     drop:
-          #       - all
+            - containerPort: 80
+              protocol: TCP
