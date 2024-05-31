@@ -30,17 +30,17 @@ jobs:
         with:
           context: ${{ env.PROJECT_DIR }}
           push: true
-          tags: "${{ secrets.DOCKER_REGISTRY }}/${{ secrets.PROJECT_NAME }}:${{ github.sha }}"
+          tags: "${{ secrets.DOCKER_REGISTRY }}/${{ secrets.PROJECT_NAME }}:latest
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          image-ref: 'vmalhotra7/2048:${{ github.sha }}'
+          image-ref: 'vmalhotra7/2048:latest'
           format: 'sarif'
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
