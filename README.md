@@ -1,2 +1,2 @@
-# Snyk-testing
-Testing snyk as a DevSec tool for CI/CD workflows
+# Trivy-testing
+Testing Trivy as a DevSec tool for CI/CD workflows with argocd handling the CD part
