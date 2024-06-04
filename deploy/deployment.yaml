@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "2048-deployment"
+  namespace: default
+  name: deployment-2048
 spec:
   selector:
     matchLabels:
-      app: "2048"
+      app.kubernetes.io/name: app-2048
   replicas: 1
   template:
     metadata:
       labels:
-        app: "2048"
+        app.kubernetes.io/name: app-2048
     spec:
       containers:
-        - image: vmalhotra7/2048:latest
-          imagePullPolicy: Always
-          name: "2048"
-          ports:
-            - containerPort: 80
-              protocol: TCP
+      - image: vmalhotra7/2048:latest
+        imagePullPolicy: Always
+        name: app-2048
+        ports:
+        - containerPort: 80
