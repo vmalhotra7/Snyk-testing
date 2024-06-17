@@ -17,6 +17,18 @@ jobs:
     name: Build
     runs-on: ubuntu-20.04
     steps:
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          # Slack channel id, channel name, or user id to post message.
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          # You can pass in multiple channels to post to by providing a comma-delimited list of channel IDs.
+          channel-id: 'C06PTQV0QLW'
+          # For posting a simple plain text message
+          slack-message: "GitHub build result:"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3
 
